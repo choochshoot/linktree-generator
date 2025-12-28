@@ -1,0 +1,21 @@
+{
+  "slug": "manuel-pulido",
+  "name": "Manuel Pulido",
+  "title": "Abogado Fiscal",
+  "whatsapp": {
+    "number": "5215618371510",
+    "cta_main": "Hola Lic. Manuel, me interesan sus servicios de asesoría fiscal.",
+    "cta_appointment": "Deseo hacer una cita."
+  },
+  "services": [
+    "Asesoría fiscal integral",
+    "Defensa ante el SAT",
+    "Planeación fiscal",
+    "Cumplimiento fiscal"
+  ],
+  "laws_url": "https://www.gob.mx/sat/documentos/leyes-fiscales",
+  "tracking": {
+    "ga4": "",
+    "meta_pixel": ""
+  }
+}

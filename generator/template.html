@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>{{NAME}} | {{TITLE}}</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <!-- Favicon -->
+  <link rel="icon" href="favicon.ico" type="image/x-icon">
+
+  <!-- Styles -->
+  <link rel="stylesheet" href="styles.css">
+
+  <!-- Tracking -->
+  {{GA_SCRIPT}}
+  {{META_SCRIPT}}
+</head>
+
+<body>
+
+<!-- Preloader -->
+<div id="preloader">
+  <img src="preloader.png" alt="Cargando">
+</div>
+
+<!-- Header -->
+<header class="profile-header">
+  <div class="avatar-wrapper">
+    <img src="profile.jpg" alt="{{NAME}}" class="avatar">
+    <img src="logo.png" alt="Logo" class="logo-thumb">
+  </div>
+  <h1>{{NAME}}</h1>
+  <p>{{TITLE}}</p>
+</header>
+
+<!-- Content -->
+<main class="links">
+  <a href="{{WHATSAPP_MAIN}}" target="_blank" onclick="trackWhatsAppMain()">
+    💬 Asesoría por WhatsApp
+  </a>
+
+  <section class="services">
+    <h2>Servicios</h2>
+    <ul>
+      {{SERVICES}}
+    </ul>
+  </section>
+
+  <a href="{{WHATSAPP_APPOINTMENT}}" target="_blank" onclick="trackAppointment()">
+    📅 Agendar cita
+  </a>
+
+  <a href="{{LAWS_URL}}" target="_blank">
+    ⚖️ Información fiscal en México
+  </a>
+</main>
+
+<!-- Tracking safe handlers -->
+<script>
+function trackWhatsAppMain() {
+  if (typeof gtag === "function") {
+    gtag('event', 'whatsapp_main');
+  }
+  if (typeof fbq === "function") {
+    fbq('track', 'Lead');
+  }
+}
+
+function trackAppointment() {
+  if (typeof gtag === "function") {
+    gtag('event', 'appointment');
+  }
+  if (typeof fbq === "function") {
+    fbq('track', 'Contact');
+  }
+}
+</script>
+
+<!-- Preloader logic -->
+<script>
+window.addEventListener("load", function () {
+  const loader = document.getElementById("preloader");
+  loader.style.opacity = "0";
+  setTimeout(() => loader.style.display = "none", 400);
+});
+</script>
+
+</body>
+</html>

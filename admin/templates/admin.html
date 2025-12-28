@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>Panel Admin | Linktree Generator</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <!-- Estilos -->
+  <link rel="stylesheet" href="/static/admin.css">
+</head>
+
+<body>
+
+  <header>
+    <h1>Panel Admin – Linktree Generator</h1>
+    <p>Configuración del perfil</p>
+  </header>
+
+  <main>
+    <form method="POST" enctype="multipart/form-data">
+
+      <!-- ================= DATOS BÁSICOS ================= -->
+      <section>
+        <h2>Datos del perfil</h2>
+
+        <label>Nombre completo</label>
+        <input type="text" name="name" value="{{ profile.name }}" required>
+
+        <label>Título / Especialidad</label>
+        <input type="text" name="title" value="{{ profile.title }}" required>
+      </section>
+
+      <!-- ================= WHATSAPP ================= -->
+      <section>
+        <h2>WhatsApp</h2>
+
+        <label>Número (con lada)</label>
+        <input type="text" name="whatsapp" value="{{ profile.whatsapp.number }}" required>
+
+        <label>Mensaje CTA principal</label>
+        <input type="text" name="cta_main" value="{{ profile.whatsapp.cta_main }}">
+
+        <label>Mensaje CTA cita</label>
+        <input type="text" name="cta_appointment" value="{{ profile.whatsapp.cta_appointment }}">
+      </section>
+
+      <!-- ================= SERVICIOS ================= -->
+      <section>
+        <h2>Servicios</h2>
+        <p class="hint">Separar por comas</p>
+
+        <textarea name="services" rows="4">{{ profile.services | join(', ') }}</textarea>
+      </section>
+
+      <!-- ================= LINKS ================= -->
+      <section>
+        <h2>Links</h2>
+
+        <label>Leyes fiscales (URL)</label>
+        <input type="url" name="laws_url" value="{{ profile.laws_url }}">
+      </section>
+
+      <!-- ================= TRACKING ================= -->
+      <section>
+        <h2>Tracking</h2>
+
+        <label>Google Analytics 4 (GA-XXXX / G-XXXX)</label>
+        <input type="text" name="ga4" value="{{ profile.tracking.ga4 }}">
+
+        <label>Meta Pixel ID</label>
+        <input type="text" name="meta_pixel" value="{{ profile.tracking.meta_pixel }}">
+      </section>
+
+      <!-- ================= IMÁGENES ================= -->
+      <section>
+        <h2>Imágenes</h2>
+        <p class="hint">Formatos recomendados: JPG / PNG</p>
+
+        <label>Foto de perfil</label>
+        <input type="file" name="profile" accept="image/*">
+
+        <label>Logo (thumb)</label>
+        <input type="file" name="logo" accept="image/*">
+
+        <label>Imagen preloader</label>
+        <input type="file" name="preload" accept="image/*">
+      </section>
+
+      <!-- ================= SUBMIT ================= -->
+      <section>
+        <button type="submit">💾 Guardar y generar Linktree</button>
+      </section>
+
+    </form>
+  </main>
+
+  <footer>
+    <small>Panel local – No subir a producción</small>
+  </footer>
+
+</body>
+</html>
