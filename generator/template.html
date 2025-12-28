@@ -1,88 +1,79 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-  <meta charset="UTF-8">
-  <title>{{NAME}} | {{TITLE}}</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="UTF-8" />
+  <title>{{ name }} | Linktree</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="{{ description }}" />
 
-  <!-- Favicon -->
-  <link rel="icon" href="favicon.ico" type="image/x-icon">
+  <!-- CSS -->
+  <link rel="stylesheet" href="assets/css/style.css" />
 
-  <!-- Styles -->
-  <link rel="stylesheet" href="styles.css">
+  <!-- Google Analytics -->
+  {% if ga_id %}
+  <script async src="https://www.googletagmanager.com/gtag/js?id={{ ga_id }}"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', '{{ ga_id }}');
+  </script>
+  {% endif %}
 
-  <!-- Tracking -->
-  {{GA_SCRIPT}}
-  {{META_SCRIPT}}
+  <!-- Meta Pixel -->
+  {% if meta_pixel %}
+  <script>
+    !function(f,b,e,v,n,t,s){
+      if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+      n.callMethod.apply(n,arguments):n.queue.push(arguments)};
+      if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
+      n.queue=[];t=b.createElement(e);t.async=!0;
+      t.src=v;s=b.getElementsByTagName(e)[0];
+      s.parentNode.insertBefore(t,s)
+    }(window, document,'script','https://connect.facebook.net/en_US/fbevents.js');
+    fbq('init', '{{ meta_pixel }}');
+    fbq('track', 'PageView');
+  </script>
+  {% endif %}
 </head>
 
 <body>
 
-<!-- Preloader -->
+<!-- PRELOADER -->
 <div id="preloader">
-  <img src="preloader.png" alt="Cargando">
+  <img src="assets/images/{{ preload_image }}" alt="Cargando" />
 </div>
 
-<!-- Header -->
 <header class="profile-header">
-  <div class="avatar-wrapper">
-    <img src="profile.jpg" alt="{{NAME}}" class="avatar">
-    <img src="logo.png" alt="Logo" class="logo-thumb">
+  <div class="profile-img-wrapper">
+    <img class="profile-img" src="assets/images/{{ profile_image }}" alt="{{ name }}" />
+    <img class="logo-thumb" src="assets/images/{{ logo_image }}" alt="Logo" />
   </div>
-  <h1>{{NAME}}</h1>
-  <p>{{TITLE}}</p>
+  <h1>{{ name }}</h1>
+  <p>{{ subtitle }}</p>
 </header>
 
-<!-- Content -->
-<main class="links">
-  <a href="{{WHATSAPP_MAIN}}" target="_blank" onclick="trackWhatsAppMain()">
-    💬 Asesoría por WhatsApp
+<main>
+  {% for link in links %}
+  <a class="link-btn" href="{{ link.url }}" target="_blank" onclick="trackClick('{{ link.label }}')">
+    {{ link.label }}
   </a>
-
-  <section class="services">
-    <h2>Servicios</h2>
-    <ul>
-      {{SERVICES}}
-    </ul>
-  </section>
-
-  <a href="{{WHATSAPP_APPOINTMENT}}" target="_blank" onclick="trackAppointment()">
-    📅 Agendar cita
-  </a>
-
-  <a href="{{LAWS_URL}}" target="_blank">
-    ⚖️ Información fiscal en México
-  </a>
+  {% endfor %}
 </main>
 
-<!-- Tracking safe handlers -->
 <script>
-function trackWhatsAppMain() {
-  if (typeof gtag === "function") {
-    gtag('event', 'whatsapp_main');
-  }
-  if (typeof fbq === "function") {
-    fbq('track', 'Lead');
-  }
-}
+  window.addEventListener("load", () => {
+    document.getElementById("preloader").style.display = "none";
+  });
 
-function trackAppointment() {
-  if (typeof gtag === "function") {
-    gtag('event', 'appointment');
+  function trackClick(label) {
+    if (typeof gtag === "function") {
+      gtag('event', 'click', { event_label: label });
+    }
+    if (typeof fbq === "function") {
+      fbq('trackCustom', 'LinkClick', { label: label });
+    }
   }
-  if (typeof fbq === "function") {
-    fbq('track', 'Contact');
-  }
-}
-</script>
-
-<!-- Preloader logic -->
-<script>
-window.addEventListener("load", function () {
-  const loader = document.getElementById("preloader");
-  loader.style.opacity = "0";
-  setTimeout(() => loader.style.display = "none", 400);
-});
 </script>
 
 </body>
