@@ -1,88 +1,70 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-  <meta charset="UTF-8">
-  <title>Manuel Pulido | Abogado Fiscal</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="UTF-8" />
+  <title>Manuel Pulido | Linktree</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Asesoría fiscal profesional, defensa ante el SAT y planeación fiscal en México." />
 
-  <!-- Favicon -->
-  <link rel="icon" href="favicon.ico" type="image/x-icon">
+  <!-- CSS -->
+  <link rel="stylesheet" href="assets/css/style.css" />
 
-  <!-- Styles -->
-  <link rel="stylesheet" href="styles.css">
-
-  <!-- Tracking -->
+  <!-- Google Analytics -->
   
+
+  <!-- Meta Pixel -->
   
 </head>
 
 <body>
 
-<!-- Preloader -->
+<!-- PRELOADER -->
 <div id="preloader">
-  <img src="preloader.png" alt="Cargando">
+  <img src="assets/images/preload.jpg" alt="Cargando" />
 </div>
 
-<!-- Header -->
 <header class="profile-header">
-  <div class="avatar-wrapper">
-    <img src="profile.jpg" alt="Manuel Pulido" class="avatar">
-    <img src="logo.png" alt="Logo" class="logo-thumb">
+  <div class="profile-img-wrapper">
+    <img class="profile-img" src="assets/images/profile.jpg" alt="Manuel Pulido" />
+    <img class="logo-thumb" src="assets/images/logo.jpg" alt="Logo" />
   </div>
   <h1>Manuel Pulido</h1>
   <p>Abogado Fiscal</p>
 </header>
 
-<!-- Content -->
-<main class="links">
-  <a href="https://wa.me/5215618371510?text=Hola Lic. Manuel, me interesan sus servicios de asesoría fiscal." target="_blank" onclick="trackWhatsAppMain()">
-    💬 Asesoría por WhatsApp
+<main>
+  
+  <a class="link-btn" href="https://wa.me/5215618371510?text=Hola%20Lic.%20Manuel,%20me%20interesan%20sus%20servicios%20de%20asesor%C3%ADa%20fiscal." target="_blank" onclick="trackClick('WhatsApp · Asesoría Fiscal')">
+    WhatsApp · Asesoría Fiscal
   </a>
-
-  <section class="services">
-    <h2>Servicios</h2>
-    <ul>
-      <li>Asesoría fiscal integral</li><li>Defensa ante el SAT</li><li>Planeación fiscal</li><li>Cumplimiento fiscal</li>
-    </ul>
-  </section>
-
-  <a href="https://wa.me/5215618371510?text=Deseo hacer una cita." target="_blank" onclick="trackAppointment()">
-    📅 Agendar cita
+  
+  <a class="link-btn" href="https://choochshoot.github.io/linktree-generator/#servicios" target="_blank" onclick="trackClick('Servicios Profesionales')">
+    Servicios Profesionales
   </a>
-
-  <a href="https://www.gob.mx/sat/documentos/leyes-fiscales" target="_blank">
-    ⚖️ Información fiscal en México
+  
+  <a class="link-btn" href="https://wa.me/5215618371510?text=Deseo%20hacer%20una%20cita." target="_blank" onclick="trackClick('Agendar Cita')">
+    Agendar Cita
   </a>
+  
+  <a class="link-btn" href="https://www.gob.mx/sat/documentos/leyes-fiscales" target="_blank" onclick="trackClick('Leyes Fiscales en México')">
+    Leyes Fiscales en México
+  </a>
+  
 </main>
 
-<!-- Tracking safe handlers -->
 <script>
-function trackWhatsAppMain() {
-  if (typeof gtag === "function") {
-    gtag('event', 'whatsapp_main');
-  }
-  if (typeof fbq === "function") {
-    fbq('track', 'Lead');
-  }
-}
+  window.addEventListener("load", () => {
+    document.getElementById("preloader").style.display = "none";
+  });
 
-function trackAppointment() {
-  if (typeof gtag === "function") {
-    gtag('event', 'appointment');
+  function trackClick(label) {
+    if (typeof gtag === "function") {
+      gtag('event', 'click', { event_label: label });
+    }
+    if (typeof fbq === "function") {
+      fbq('trackCustom', 'LinkClick', { label: label });
+    }
   }
-  if (typeof fbq === "function") {
-    fbq('track', 'Contact');
-  }
-}
-</script>
-
-<!-- Preloader logic -->
-<script>
-window.addEventListener("load", function () {
-  const loader = document.getElementById("preloader");
-  loader.style.opacity = "0";
-  setTimeout(() => loader.style.display = "none", 400);
-});
 </script>
 
 </body>
