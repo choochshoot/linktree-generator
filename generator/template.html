@@ -2,21 +2,26 @@
 <html lang="es">
 <head>
   <meta charset="UTF-8" />
-  <title>{{ name }} | Linktree</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <meta name="description" content="{{ description }}" />
+  <title>{{ name }} · {{ title }}</title>
+
+  <!-- SEO básico -->
+  <meta name="description" content="{{ name }} - {{ title }}. Contacto profesional y asesoría especializada." />
 
   <!-- CSS -->
   <link rel="stylesheet" href="assets/css/style.css" />
 
-  <!-- Google Analytics -->
-  {% if ga_id %}
-  <script async src="https://www.googletagmanager.com/gtag/js?id={{ ga_id }}"></script>
+  <!-- Font Awesome (iconos elegantes) -->
+  <script src="https://kit.fontawesome.com/a2e0e6ad65.js" crossorigin="anonymous"></script>
+
+  <!-- Google Analytics 4 -->
+  {% if ga4 %}
+  <script async src="https://www.googletagmanager.com/gtag/js?id={{ ga4 }}"></script>
   <script>
     window.dataLayer = window.dataLayer || [];
     function gtag(){dataLayer.push(arguments);}
     gtag('js', new Date());
-    gtag('config', '{{ ga_id }}');
+    gtag('config', '{{ ga4 }}');
   </script>
   {% endif %}
 
@@ -26,11 +31,13 @@
     !function(f,b,e,v,n,t,s){
       if(f.fbq)return;n=f.fbq=function(){n.callMethod?
       n.callMethod.apply(n,arguments):n.queue.push(arguments)};
-      if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
+      if(!f._fbq)f._fbq=n;
+      n.push=n;n.loaded=!0;n.version='2.0';
       n.queue=[];t=b.createElement(e);t.async=!0;
       t.src=v;s=b.getElementsByTagName(e)[0];
       s.parentNode.insertBefore(t,s)
-    }(window, document,'script','https://connect.facebook.net/en_US/fbevents.js');
+    }(window, document,'script',
+    'https://connect.facebook.net/en_US/fbevents.js');
     fbq('init', '{{ meta_pixel }}');
     fbq('track', 'PageView');
   </script>
@@ -39,42 +46,115 @@
 
 <body>
 
-<!-- PRELOADER -->
-<div id="preloader">
-  <img src="assets/images/{{ preload_image }}" alt="Cargando" />
-</div>
-
-<header class="profile-header">
-  <div class="profile-img-wrapper">
-    <img class="profile-img" src="assets/images/{{ profile_image }}" alt="{{ name }}" />
-    <img class="logo-thumb" src="assets/images/{{ logo_image }}" alt="Logo" />
+  <!-- PRELOADER -->
+  <div id="preloader">
+    <img src="assets/images/preload.jpg" alt="Cargando..." />
   </div>
-  <h1>{{ name }}</h1>
-  <p>{{ subtitle }}</p>
-</header>
 
-<main>
-  {% for link in links %}
-  <a class="link-btn" href="{{ link.url }}" target="_blank" onclick="trackClick('{{ link.label }}')">
-    {{ link.label }}
-  </a>
-  {% endfor %}
-</main>
+  <main class="container" style="display:none;" id="content">
 
-<script>
-  window.addEventListener("load", () => {
-    document.getElementById("preloader").style.display = "none";
-  });
+    <!-- HEADER PERFIL -->
+    <header class="profile-header">
+      <div style="position: relative; display: inline-block;">
+        <img
+          src="assets/images/profile.jpg"
+          alt="{{ name }}"
+          class="profile-photo"
+        />
 
-  function trackClick(label) {
-    if (typeof gtag === "function") {
-      gtag('event', 'click', { event_label: label });
-    }
-    if (typeof fbq === "function") {
-      fbq('trackCustom', 'LinkClick', { label: label });
-    }
-  }
-</script>
+        <!-- LOGO EMPRESA (THUMB) -->
+        <img
+          src="assets/images/logo.jpg"
+          alt="Logo"
+          style="
+            position: absolute;
+            bottom: 4px;
+            right: 4px;
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            border: 2px solid white;
+            background: white;
+          "
+        />
+      </div>
+
+      <h1>{{ name }}</h1>
+      <p>{{ title }}</p>
+    </header>
+
+    <!-- LINKS / CTA -->
+    <section class="links">
+
+      <!-- WhatsApp principal -->
+      <a
+        class="link-btn"
+        href="{{ whatsapp_main }}"
+        target="_blank"
+        onclick="if(window.gtag){gtag('event','click',{event_category:'CTA',event_label:'WhatsApp Asesoría'});}"
+      >
+        <i class="fa-brands fa-whatsapp"></i>
+        WhatsApp · Asesoría Fiscal
+      </a>
+
+      <!-- Servicios -->
+      <a class="link-btn secondary" href="#services">
+        <i class="fa-solid fa-scale-balanced"></i>
+        Servicios Profesionales
+      </a>
+
+      <!-- Cita -->
+      <a
+        class="link-btn"
+        href="{{ whatsapp_appointment }}"
+        target="_blank"
+        onclick="if(window.gtag){gtag('event','click',{event_category:'CTA',event_label:'Agendar Cita'});}"
+      >
+        <i class="fa-solid fa-calendar-check"></i>
+        Agendar Cita
+      </a>
+
+      <!-- Leyes -->
+      <a
+        class="link-btn secondary"
+        href="{{ laws_url }}"
+        target="_blank"
+      >
+        <i class="fa-solid fa-book-law"></i>
+        Leyes Fiscales en México
+      </a>
+
+    </section>
+
+    <!-- SERVICIOS -->
+    <section id="services" style="margin-top:32px;">
+      <ul style="list-style:none; padding:0; font-size:0.9rem; color:#374151;">
+        {% for service in services %}
+        <li style="margin-bottom:8px;">
+          • {{ service }}
+        </li>
+        {% endfor %}
+      </ul>
+    </section>
+
+    <!-- FOOTER -->
+    <footer class="footer">
+      © {{ name }} · Todos los derechos reservados
+    </footer>
+
+  </main>
+
+  <!-- JS PRELOADER -->
+  <script>
+    window.addEventListener("load", () => {
+      const preloader = document.getElementById("preloader");
+      const content = document.getElementById("content");
+      setTimeout(() => {
+        preloader.style.display = "none";
+        content.style.display = "block";
+      }, 600);
+    });
+  </script>
 
 </body>
 </html>

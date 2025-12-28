@@ -2,14 +2,19 @@
 <html lang="es">
 <head>
   <meta charset="UTF-8" />
-  <title>Manuel Pulido | Linktree</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <meta name="description" content="Asesoría fiscal profesional, defensa ante el SAT y planeación fiscal en México." />
+  <title>Manuel Pulido · </title>
+
+  <!-- SEO básico -->
+  <meta name="description" content="Manuel Pulido - . Contacto profesional y asesoría especializada." />
 
   <!-- CSS -->
   <link rel="stylesheet" href="assets/css/style.css" />
 
-  <!-- Google Analytics -->
+  <!-- Font Awesome (iconos elegantes) -->
+  <script src="https://kit.fontawesome.com/a2e0e6ad65.js" crossorigin="anonymous"></script>
+
+  <!-- Google Analytics 4 -->
   
 
   <!-- Meta Pixel -->
@@ -18,54 +23,111 @@
 
 <body>
 
-<!-- PRELOADER -->
-<div id="preloader">
-  <img src="assets/images/preload.jpg" alt="Cargando" />
-</div>
-
-<header class="profile-header">
-  <div class="profile-img-wrapper">
-    <img class="profile-img" src="assets/images/profile.jpg" alt="Manuel Pulido" />
-    <img class="logo-thumb" src="assets/images/logo.jpg" alt="Logo" />
+  <!-- PRELOADER -->
+  <div id="preloader">
+    <img src="assets/images/preload.jpg" alt="Cargando..." />
   </div>
-  <h1>Manuel Pulido</h1>
-  <p>Abogado Fiscal</p>
-</header>
 
-<main>
-  
-  <a class="link-btn" href="https://wa.me/5215618371510?text=Hola%20Lic.%20Manuel,%20me%20interesan%20sus%20servicios%20de%20asesor%C3%ADa%20fiscal." target="_blank" onclick="trackClick('WhatsApp · Asesoría Fiscal')">
-    WhatsApp · Asesoría Fiscal
-  </a>
-  
-  <a class="link-btn" href="https://choochshoot.github.io/linktree-generator/#servicios" target="_blank" onclick="trackClick('Servicios Profesionales')">
-    Servicios Profesionales
-  </a>
-  
-  <a class="link-btn" href="https://wa.me/5215618371510?text=Deseo%20hacer%20una%20cita." target="_blank" onclick="trackClick('Agendar Cita')">
-    Agendar Cita
-  </a>
-  
-  <a class="link-btn" href="https://www.gob.mx/sat/documentos/leyes-fiscales" target="_blank" onclick="trackClick('Leyes Fiscales en México')">
-    Leyes Fiscales en México
-  </a>
-  
-</main>
+  <main class="container" style="display:none;" id="content">
 
-<script>
-  window.addEventListener("load", () => {
-    document.getElementById("preloader").style.display = "none";
-  });
+    <!-- HEADER PERFIL -->
+    <header class="profile-header">
+      <div style="position: relative; display: inline-block;">
+        <img
+          src="assets/images/profile.jpg"
+          alt="Manuel Pulido"
+          class="profile-photo"
+        />
 
-  function trackClick(label) {
-    if (typeof gtag === "function") {
-      gtag('event', 'click', { event_label: label });
-    }
-    if (typeof fbq === "function") {
-      fbq('trackCustom', 'LinkClick', { label: label });
-    }
-  }
-</script>
+        <!-- LOGO EMPRESA (THUMB) -->
+        <img
+          src="assets/images/logo.jpg"
+          alt="Logo"
+          style="
+            position: absolute;
+            bottom: 4px;
+            right: 4px;
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            border: 2px solid white;
+            background: white;
+          "
+        />
+      </div>
+
+      <h1>Manuel Pulido</h1>
+      <p></p>
+    </header>
+
+    <!-- LINKS / CTA -->
+    <section class="links">
+
+      <!-- WhatsApp principal -->
+      <a
+        class="link-btn"
+        href=""
+        target="_blank"
+        onclick="if(window.gtag){gtag('event','click',{event_category:'CTA',event_label:'WhatsApp Asesoría'});}"
+      >
+        <i class="fa-brands fa-whatsapp"></i>
+        WhatsApp · Asesoría Fiscal
+      </a>
+
+      <!-- Servicios -->
+      <a class="link-btn secondary" href="#services">
+        <i class="fa-solid fa-scale-balanced"></i>
+        Servicios Profesionales
+      </a>
+
+      <!-- Cita -->
+      <a
+        class="link-btn"
+        href=""
+        target="_blank"
+        onclick="if(window.gtag){gtag('event','click',{event_category:'CTA',event_label:'Agendar Cita'});}"
+      >
+        <i class="fa-solid fa-calendar-check"></i>
+        Agendar Cita
+      </a>
+
+      <!-- Leyes -->
+      <a
+        class="link-btn secondary"
+        href=""
+        target="_blank"
+      >
+        <i class="fa-solid fa-book-law"></i>
+        Leyes Fiscales en México
+      </a>
+
+    </section>
+
+    <!-- SERVICIOS -->
+    <section id="services" style="margin-top:32px;">
+      <ul style="list-style:none; padding:0; font-size:0.9rem; color:#374151;">
+        
+      </ul>
+    </section>
+
+    <!-- FOOTER -->
+    <footer class="footer">
+      © Manuel Pulido · Todos los derechos reservados
+    </footer>
+
+  </main>
+
+  <!-- JS PRELOADER -->
+  <script>
+    window.addEventListener("load", () => {
+      const preloader = document.getElementById("preloader");
+      const content = document.getElementById("content");
+      setTimeout(() => {
+        preloader.style.display = "none";
+        content.style.display = "block";
+      }, 600);
+    });
+  </script>
 
 </body>
 </html>
