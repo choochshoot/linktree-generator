@@ -3,15 +3,14 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Manuel Pulido · </title>
 
-  <!-- SEO básico -->
-  <meta name="description" content="Manuel Pulido - . Contacto profesional y asesoría especializada." />
+  <title>Manuel Pulido · Abogado Fiscal</title>
+  <meta name="description" content="Asesoría fiscal profesional, defensa ante el SAT y planeación fiscal en México." />
 
   <!-- CSS -->
   <link rel="stylesheet" href="assets/css/style.css" />
 
-  <!-- Font Awesome (iconos elegantes) -->
+  <!-- Font Awesome -->
   <script src="https://kit.fontawesome.com/a2e0e6ad65.js" crossorigin="anonymous"></script>
 
   <!-- Google Analytics 4 -->
@@ -28,86 +27,79 @@
     <img src="assets/images/preload.jpg" alt="Cargando..." />
   </div>
 
-  <main class="container" style="display:none;" id="content">
+  <main class="container" id="content" style="display:none;">
 
-    <!-- HEADER PERFIL -->
+    <!-- HEADER -->
     <header class="profile-header">
-      <div style="position: relative; display: inline-block;">
+      <div style="position:relative;display:inline-block;">
         <img
           src="assets/images/profile.jpg"
-          alt="Manuel Pulido"
           class="profile-photo"
+          alt="Manuel Pulido"
         />
-
-        <!-- LOGO EMPRESA (THUMB) -->
         <img
           src="assets/images/logo.jpg"
           alt="Logo"
           style="
-            position: absolute;
-            bottom: 4px;
-            right: 4px;
-            width: 36px;
-            height: 36px;
-            border-radius: 50%;
-            border: 2px solid white;
-            background: white;
+            position:absolute;
+            bottom:4px;
+            right:4px;
+            width:36px;
+            height:36px;
+            border-radius:50%;
+            border:2px solid white;
+            background:white;
           "
         />
       </div>
 
       <h1>Manuel Pulido</h1>
-      <p></p>
+      <p>Abogado Fiscal</p>
     </header>
 
-    <!-- LINKS / CTA -->
+    <!-- LINKS / CTA (DINÁMICOS) -->
     <section class="links">
-
-      <!-- WhatsApp principal -->
-      <a
-        class="link-btn"
-        href=""
-        target="_blank"
-        onclick="if(window.gtag){gtag('event','click',{event_category:'CTA',event_label:'WhatsApp Asesoría'});}"
-      >
-        <i class="fa-brands fa-whatsapp"></i>
-        WhatsApp · Asesoría Fiscal
-      </a>
-
-      <!-- Servicios -->
-      <a class="link-btn secondary" href="#services">
-        <i class="fa-solid fa-scale-balanced"></i>
-        Servicios Profesionales
-      </a>
-
-      <!-- Cita -->
-      <a
-        class="link-btn"
-        href=""
-        target="_blank"
-        onclick="if(window.gtag){gtag('event','click',{event_category:'CTA',event_label:'Agendar Cita'});}"
-      >
-        <i class="fa-solid fa-calendar-check"></i>
-        Agendar Cita
-      </a>
-
-      <!-- Leyes -->
-      <a
-        class="link-btn secondary"
-        href=""
-        target="_blank"
-      >
-        <i class="fa-solid fa-book-law"></i>
-        Leyes Fiscales en México
-      </a>
-
-    </section>
-
-    <!-- SERVICIOS -->
-    <section id="services" style="margin-top:32px;">
-      <ul style="list-style:none; padding:0; font-size:0.9rem; color:#374151;">
-        
-      </ul>
+      
+        <a
+          class="link-btn"
+          href="https://wa.me/5215618371510?text=Hola%20Lic.%20Manuel,%20me%20interesan%20sus%20servicios%20de%20asesor%C3%ADa%20fiscal."
+          target="_blank"
+          rel="noopener"
+        >
+          <i class="fa-solid fa-arrow-up-right-from-square"></i>
+          WhatsApp asesoría fiscal
+        </a>
+      
+        <a
+          class="link-btn"
+          href="https://choochshoot.github.io/linktree-generator/#servicios"
+          target="_blank"
+          rel="noopener"
+        >
+          <i class="fa-solid fa-arrow-up-right-from-square"></i>
+          Nuestros servicios
+        </a>
+      
+        <a
+          class="link-btn"
+          href="https://wa.me/5215618371510?text=Deseo%20hacer%20una%20cita."
+          target="_blank"
+          rel="noopener"
+        >
+          <i class="fa-solid fa-arrow-up-right-from-square"></i>
+          Agendar cita
+        </a>
+      
+        <a
+          class="link-btn"
+          href="https://www.gob.mx/sat/documentos/leyes-fiscales"
+          target="_blank"
+          rel="noopener"
+        >
+          <i class="fa-solid fa-arrow-up-right-from-square"></i>
+          Leyes fiscales en México
+        </a>
+      
     </section>
 
     <!-- FOOTER -->
@@ -117,15 +109,13 @@
 
   </main>
 
-  <!-- JS PRELOADER -->
+  <!-- PRELOADER SCRIPT -->
   <script>
     window.addEventListener("load", () => {
-      const preloader = document.getElementById("preloader");
-      const content = document.getElementById("content");
       setTimeout(() => {
-        preloader.style.display = "none";
-        content.style.display = "block";
-      }, 600);
+        document.getElementById("preloader").style.display = "none";
+        document.getElementById("content").style.display = "block";
+      }, 500);
     });
   </script>
 

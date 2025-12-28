@@ -1,47 +1,41 @@
 import json
-from pathlib import Path
+import os
 from jinja2 import Environment, FileSystemLoader
 
-BASE_DIR = Path(__file__).resolve().parent.parent
-PROFILE_PATH = BASE_DIR / "profiles" / "manuel-pulido.json"
-TEMPLATE_DIR = BASE_DIR / "generator"
-PUBLIC_DIR = BASE_DIR / "public"
+BASE_DIR = os.path.abspath(os.path.join(os.path.dirname(__file__), ".."))
 
-def build():
-    if not PROFILE_PATH.exists():
-        raise FileNotFoundError(f"No se encontró el perfil: {PROFILE_PATH}")
+PROFILE = os.path.join(BASE_DIR, "profiles", "manuel-pulido.json")
+TEMPLATE_DIR = os.path.join(BASE_DIR, "generator")
+OUTPUT_DIR = os.path.join(BASE_DIR, "public")
+OUTPUT_FILE = os.path.join(OUTPUT_DIR, "index.html")
 
-    with open(PROFILE_PATH, encoding="utf-8") as f:
-        profile = json.load(f)
+# Crear entorno Jinja
+env = Environment(loader=FileSystemLoader(TEMPLATE_DIR))
+template = env.get_template("template.html")
 
-    env = Environment(
-        loader=FileSystemLoader(TEMPLATE_DIR),
-        autoescape=True
-    )
+# Leer perfil
+with open(PROFILE, encoding="utf-8") as f:
+    profile = json.load(f)
 
-    template = env.get_template("template.html")
+# Renderizar HTML
+html = template.render(
+    name=profile.get("name", ""),
+    title=profile.get("subtitle", ""),
+    description=profile.get("description", ""),
+    links=profile.get("links", []),
+    ga4=profile.get("ga_id", ""),
+    meta_pixel=profile.get("meta_pixel", "")
+)
 
-    html = template.render(
-        name=profile["name"],
-        subtitle=profile["subtitle"],
-        description=profile.get("description", ""),
-        profile_image=profile["profile_image"],
-        logo_image=profile["logo_image"],
-        preload_image=profile["preload_image"],
-        links=profile["links"],
-        ga_id=profile.get("ga_id"),
-        meta_pixel=profile.get("meta_pixel")
-    )
+# Asegurar carpeta public
+os.makedirs(OUTPUT_DIR, exist_ok=True)
 
-    PUBLIC_DIR.mkdir(exist_ok=True)
+# Guardar archivo
+with open(OUTPUT_FILE, "w", encoding="utf-8") as f:
+    f.write(html)
 
-    output = PUBLIC_DIR / "index.html"
-    output.write_text(html, encoding="utf-8")
+print("✅ Linktree generado correctamente")
+print(f"📄 Archivo: {OUTPUT_FILE}")
 
-    print("✅ Linktree generado correctamente")
-    print(f"📄 Archivo: {output}")
-
-if __name__ == "__main__":
-    build()
 
 

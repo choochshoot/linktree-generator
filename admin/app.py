@@ -1,97 +1,74 @@
 from flask import Flask, render_template, request, redirect, url_for
 import json
-import os
 import subprocess
+import os
 
 # ===============================
-# CONFIGURACIÓN
+# APP SETUP
 # ===============================
-BASE_DIR = os.path.abspath(os.path.dirname(__file__))
+BASE_DIR = os.path.abspath(os.path.join(os.path.dirname(__file__), ".."))
 
-PROFILE_PATH = os.path.join(BASE_DIR, "..", "profiles", "manuel-pulido.json")
-GENERATOR_SCRIPT = os.path.join(BASE_DIR, "..", "generator", "build.py")
-IMAGES_PATH = os.path.join(BASE_DIR, "..", "public", "assets", "images")
+app = Flask(
+    __name__,
+    static_folder=os.path.join(BASE_DIR, "public"),
+    static_url_path="/static-preview"
+)
 
-ALLOWED_IMAGES = {
-    "profile": "profile.jpg",
-    "logo": "logo.jpg",
-    "preload": "preload.jpg"
-}
+PROFILE_PATH = os.path.join(BASE_DIR, "profiles", "manuel-pulido.json")
+BUILD_SCRIPT = os.path.join(BASE_DIR, "generator", "build.py")
 
-app = Flask(__name__)
-app.config["MAX_CONTENT_LENGTH"] = 5 * 1024 * 1024  # 5MB
-
-
-# ===============================
-# HELPERS
-# ===============================
-def load_profile():
-    with open(PROFILE_PATH, "r", encoding="utf-8") as f:
-        return json.load(f)
-
-
-def save_profile(profile):
-    with open(PROFILE_PATH, "w", encoding="utf-8") as f:
-        json.dump(profile, f, indent=2, ensure_ascii=False)
-
-
-def generate_linktree():
-    subprocess.run(
-        ["python", GENERATOR_SCRIPT],
-        cwd=os.path.dirname(GENERATOR_SCRIPT),
-        check=True
-    )
-
+# Labels profesionales por posición
+DEFAULT_LABELS = [
+    "WhatsApp asesoría fiscal",
+    "Nuestros servicios",
+    "Agendar cita",
+    "Leyes fiscales en México"
+]
 
 # ===============================
-# ROUTES
+# ADMIN PANEL
 # ===============================
 @app.route("/", methods=["GET", "POST"])
-def admin_panel():
-    profile = load_profile()
+def admin():
+    # Leer perfil actual
+    with open(PROFILE_PATH, encoding="utf-8") as f:
+        profile = json.load(f)
 
     if request.method == "POST":
-        # ---- Datos básicos ----
+        # Datos básicos
         profile["name"] = request.form.get("name", "").strip()
-        profile["title"] = request.form.get("title", "").strip()
+        profile["subtitle"] = request.form.get("subtitle", "").strip()
+        profile["description"] = request.form.get("description", "").strip()
 
-        # ---- WhatsApp ----
-        profile["whatsapp"]["number"] = request.form.get("whatsapp", "").strip()
-        profile["whatsapp"]["cta_main"] = request.form.get("cta_main", "").strip()
-        profile["whatsapp"]["cta_appointment"] = request.form.get("cta_appointment", "").strip()
+        # Links (uno por línea)
+        raw_links = request.form.get("links", "").split("\n")
+        profile["links"] = [
+            {
+                "label": DEFAULT_LABELS[i] if i < len(DEFAULT_LABELS) else f"Link {i + 1}",
+                "url": url.strip()
+            }
+            for i, url in enumerate(raw_links)
+            if url.strip()
+        ]
 
-        # ---- Servicios ----
-        services_raw = request.form.get("services", "")
-        profile["services"] = [s.strip() for s in services_raw.split(",") if s.strip()]
+        # Tracking
+        profile["ga_id"] = request.form.get("ga_id", "").strip()
+        profile["meta_pixel"] = request.form.get("meta_pixel", "").strip()
 
-        # ---- Links ----
-        profile["laws_url"] = request.form.get("laws_url", "").strip()
+        # Guardar JSON
+        with open(PROFILE_PATH, "w", encoding="utf-8") as f:
+            json.dump(profile, f, ensure_ascii=False, indent=2)
 
-        # ---- Tracking ----
-        profile["tracking"]["ga4"] = request.form.get("ga4", "").strip()
-        profile["tracking"]["meta_pixel"] = request.form.get("meta_pixel", "").strip()
+        # Regenerar Linktree
+        subprocess.run(["python", BUILD_SCRIPT], check=True)
 
-        # ---- Imágenes ----
-        os.makedirs(IMAGES_PATH, exist_ok=True)
-
-        for field, filename in ALLOWED_IMAGES.items():
-            file = request.files.get(field)
-            if file and file.filename:
-                file.save(os.path.join(IMAGES_PATH, filename))
-
-        # ---- Guardar y generar ----
-        save_profile(profile)
-        generate_linktree()
-
-        return redirect(url_for("admin_panel"))
+        return redirect(url_for("admin"))
 
     return render_template("admin.html", profile=profile)
 
 
 # ===============================
-# MAIN
+# RUN
 # ===============================
 if __name__ == "__main__":
-    print("🟢 Panel Admin iniciado")
-    print("👉 http://127.0.0.1:5000")
     app.run(debug=True)

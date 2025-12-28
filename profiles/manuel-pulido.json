@@ -3,29 +3,26 @@
   "name": "Manuel Pulido",
   "subtitle": "Abogado Fiscal",
   "description": "Asesoría fiscal profesional, defensa ante el SAT y planeación fiscal en México.",
-
   "profile_image": "profile.jpg",
   "logo_image": "logo.jpg",
   "preload_image": "preload.jpg",
-
   "ga_id": "",
   "meta_pixel": "",
-
   "links": [
     {
-      "label": "WhatsApp · Asesoría Fiscal",
+      "label": "WhatsApp asesoría fiscal",
       "url": "https://wa.me/5215618371510?text=Hola%20Lic.%20Manuel,%20me%20interesan%20sus%20servicios%20de%20asesor%C3%ADa%20fiscal."
     },
     {
-      "label": "Servicios Profesionales",
+      "label": "Nuestros servicios",
       "url": "https://choochshoot.github.io/linktree-generator/#servicios"
     },
     {
-      "label": "Agendar Cita",
+      "label": "Agendar cita",
       "url": "https://wa.me/5215618371510?text=Deseo%20hacer%20una%20cita."
     },
     {
-      "label": "Leyes Fiscales en México",
+      "label": "Leyes fiscales en México",
       "url": "https://www.gob.mx/sat/documentos/leyes-fiscales"
     }
   ]

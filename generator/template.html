@@ -3,15 +3,14 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>{{ name }} · {{ title }}</title>
 
-  <!-- SEO básico -->
-  <meta name="description" content="{{ name }} - {{ title }}. Contacto profesional y asesoría especializada." />
+  <title>{{ name }} · {{ title }}</title>
+  <meta name="description" content="{{ description }}" />
 
   <!-- CSS -->
   <link rel="stylesheet" href="assets/css/style.css" />
 
-  <!-- Font Awesome (iconos elegantes) -->
+  <!-- Font Awesome -->
   <script src="https://kit.fontawesome.com/a2e0e6ad65.js" crossorigin="anonymous"></script>
 
   <!-- Google Analytics 4 -->
@@ -51,30 +50,28 @@
     <img src="assets/images/preload.jpg" alt="Cargando..." />
   </div>
 
-  <main class="container" style="display:none;" id="content">
+  <main class="container" id="content" style="display:none;">
 
-    <!-- HEADER PERFIL -->
+    <!-- HEADER -->
     <header class="profile-header">
-      <div style="position: relative; display: inline-block;">
+      <div style="position:relative;display:inline-block;">
         <img
           src="assets/images/profile.jpg"
-          alt="{{ name }}"
           class="profile-photo"
+          alt="{{ name }}"
         />
-
-        <!-- LOGO EMPRESA (THUMB) -->
         <img
           src="assets/images/logo.jpg"
           alt="Logo"
           style="
-            position: absolute;
-            bottom: 4px;
-            right: 4px;
-            width: 36px;
-            height: 36px;
-            border-radius: 50%;
-            border: 2px solid white;
-            background: white;
+            position:absolute;
+            bottom:4px;
+            right:4px;
+            width:36px;
+            height:36px;
+            border-radius:50%;
+            border:2px solid white;
+            background:white;
           "
         />
       </div>
@@ -83,58 +80,19 @@
       <p>{{ title }}</p>
     </header>
 
-    <!-- LINKS / CTA -->
+    <!-- LINKS / CTA (DINÁMICOS) -->
     <section class="links">
-
-      <!-- WhatsApp principal -->
-      <a
-        class="link-btn"
-        href="{{ whatsapp_main }}"
-        target="_blank"
-        onclick="if(window.gtag){gtag('event','click',{event_category:'CTA',event_label:'WhatsApp Asesoría'});}"
-      >
-        <i class="fa-brands fa-whatsapp"></i>
-        WhatsApp · Asesoría Fiscal
-      </a>
-
-      <!-- Servicios -->
-      <a class="link-btn secondary" href="#services">
-        <i class="fa-solid fa-scale-balanced"></i>
-        Servicios Profesionales
-      </a>
-
-      <!-- Cita -->
-      <a
-        class="link-btn"
-        href="{{ whatsapp_appointment }}"
-        target="_blank"
-        onclick="if(window.gtag){gtag('event','click',{event_category:'CTA',event_label:'Agendar Cita'});}"
-      >
-        <i class="fa-solid fa-calendar-check"></i>
-        Agendar Cita
-      </a>
-
-      <!-- Leyes -->
-      <a
-        class="link-btn secondary"
-        href="{{ laws_url }}"
-        target="_blank"
-      >
-        <i class="fa-solid fa-book-law"></i>
-        Leyes Fiscales en México
-      </a>
-
-    </section>
-
-    <!-- SERVICIOS -->
-    <section id="services" style="margin-top:32px;">
-      <ul style="list-style:none; padding:0; font-size:0.9rem; color:#374151;">
-        {% for service in services %}
-        <li style="margin-bottom:8px;">
-          • {{ service }}
-        </li>
-        {% endfor %}
-      </ul>
+      {% for link in links %}
+        <a
+          class="link-btn"
+          href="{{ link.url }}"
+          target="_blank"
+          rel="noopener"
+        >
+          <i class="fa-solid fa-arrow-up-right-from-square"></i>
+          {{ link.label }}
+        </a>
+      {% endfor %}
     </section>
 
     <!-- FOOTER -->
@@ -144,17 +102,16 @@
 
   </main>
 
-  <!-- JS PRELOADER -->
+  <!-- PRELOADER SCRIPT -->
   <script>
     window.addEventListener("load", () => {
-      const preloader = document.getElementById("preloader");
-      const content = document.getElementById("content");
       setTimeout(() => {
-        preloader.style.display = "none";
-        content.style.display = "block";
-      }, 600);
+        document.getElementById("preloader").style.display = "none";
+        document.getElementById("content").style.display = "block";
+      }, 500);
     });
   </script>
 
 </body>
 </html>
+
